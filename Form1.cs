@@ -29,9 +29,22 @@ namespace StudentRegistrationApplication
 
         }
 
+        private void DisplayInfo(string fullName, string gender, string dob, string program)
+        {
+            MessageBox.Show("Student Name: " + fullName + "\nGender: " + gender + "\nDate of Birth: " + dob + "\nProgram: " + program);
+        }
+        private void DisplayInfo(string fullName, string program)
+        {
+            MessageBox.Show("Student Name: " + fullName + "\nProgram: " + program);
+        }
+        private void DisplayInfo(string firstName, string lastName, string program)
+        {
+            MessageBox.Show("Student Name: " + firstName + " " + lastName + "\nProgram: " + program);
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            string lastname = txtFirstName.Text;
+            string lastName = txtLastName.Text;
             string firstName = txtFirstName.Text;
             string middleName = txtMiddleName.Text;
 
@@ -46,12 +59,12 @@ namespace StudentRegistrationApplication
             string year = cmbYear.SelectedItem != null ? cmbYear.SelectedItem.ToString() : "";
             string program = cmbProgram.SelectedItem != null ? cmbProgram.SelectedItem.ToString() : "";
 
-            string message = "Student Name: " + firstName + " " + middleName + " " + lastname + "\n" + 
-                "Gender: " + gender + "\n" +
-                "Date of Birth: " + day + "/" + month + "/" + year + "\n" +
-                "Program: " + program;
-
-            MessageBox.Show(message);
+            string dob = day + " / " + month + " / " + year;
+            string fullname = firstName + " " + middleName + " " + lastName;
+            
+            DisplayInfo(fullname, gender, dob, program);
+            DisplayInfo(fullname, program);
+            DisplayInfo(firstName,lastName, program);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -84,5 +97,22 @@ namespace StudentRegistrationApplication
             cmbProgram.SelectedIndex = 0;
         }
 
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog()) { 
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+                openFileDialog.Title = "Select a Student Profile Picture";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedImagePath = openFileDialog.FileName;
+                    pictureBox1.Image = Image.FromFile(selectedImagePath);
+                }
+            }  
+        }
     }
 }
